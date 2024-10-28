@@ -38,7 +38,7 @@ header("location:index.php?page=home");
 		right:0;
 		width:40%;
 		height: calc(100%);
-		background: url('assets/img/blue.png'); /* Updated image path */
+		background: url('assets/img/goo.png'); /* Updated image path */
 		display: flex;
 		align-items: center;
 	}
@@ -50,7 +50,7 @@ header("location:index.php?page=home");
 		background:#59b6ec61;
 		display: flex;
 		align-items: center;
-		background: url('assets/img/admin.png'); /* Updated image path */
+		background: url('assets/img/go.png'); /* Updated image path */
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	}

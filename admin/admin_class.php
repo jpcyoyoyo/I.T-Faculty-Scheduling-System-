@@ -306,7 +306,7 @@ Class Action {
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM faculty where id = ".$id);
 		if($delete){
-			return 1;
+			return 1; 
 		}
 	}
 	function save_schedule(){

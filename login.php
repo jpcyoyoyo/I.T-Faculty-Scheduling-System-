@@ -34,7 +34,7 @@ ob_end_flush();
       display: flex;
       align-items: center;
       justify-content: flex-start; /* Align to the left */
-      background: url('assets/Images/Home.png') no-repeat center center;
+      background: url('assets/Images/Home1.png') no-repeat center center;
       background-size: cover;
       padding-left: 200px; /* Adds space on the left */
     }
