@@ -32,13 +32,13 @@ foreach($user->fetch_array() as $k =>$v){
 			<input type="hidden" name="type" value="3">
 		<?php else: ?>
 		<?php if(!isset($_GET['mtype'])): ?>
-		<div class="form-group">
-			<label for="type">User Type</label>
-			<select name="type" id="type" class="custom-select">
-				<option value="2" <?php echo isset($meta['type']) && $meta['type'] == 2 ? 'selected': '' ?>>Staff</option>
-				<option value="1" <?php echo isset($meta['type']) && $meta['type'] == 1 ? 'selected': '' ?>>Admin</option>
-			</select>
-		</div>
+			<div class="form-group">
+    			<label for="type">User Type</label>
+    			<select name="type" id="type" class="custom-select">
+        			<option value="2" <?php echo isset($meta['type']) && $meta['type'] == 2 ? 'selected': '' ?>>Staff</option>
+        			<option value="1" <?php echo isset($meta['type']) && $meta['type'] == 1 ? 'selected': '' ?>>Admin</option>
+    			</select>
+			</div>
 		<?php endif; ?>
 		<?php endif; ?>
 		
@@ -46,26 +46,31 @@ foreach($user->fetch_array() as $k =>$v){
 	</form>
 </div>
 <script>
-	
-	$('#manage-user').submit(function(e){
-		e.preventDefault();
-		start_load()
-		$.ajax({
-			url:'ajax.php?action=save_user',
-			method:'POST',
-			data:$(this).serialize(),
-			success:function(resp){
-				if(resp ==1){
-					alert_toast("Data successfully saved",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
-				}else{
-					$('#msg').html('<div class="alert alert-danger">Username already exist</div>')
-					end_load()
-				}
-			}
-		})
-	})
-
+$('#manage-user').submit(function(e){
+    e.preventDefault();
+    start_load()
+    $.ajax({
+        url:'ajax.php?action=save_user',
+        method:'POST',
+        data:$(this).serialize(),
+        success:function(resp){
+            if(resp == 1){
+                alert_toast("Data successfully saved",'success')
+                setTimeout(function(){
+                    location.reload()
+                },1500)
+            }else if(resp == 2){
+                $('#msg').html('<div class="alert alert-danger">Username already exists. Please choose a different username.</div>')
+                end_load()
+            }else{
+                $('#msg').html('<div class="alert alert-danger">Error saving data. Please check the debug log.</div>')
+                end_load()
+            }
+        },
+        error: function(xhr, status, error) {
+            $('#msg').html('<div class="alert alert-danger">Ajax Error: ' + error + '</div>')
+            end_load()
+        }
+    })
+})
 </script>

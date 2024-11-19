@@ -1,21 +1,31 @@
-<?php include 'db_connect.php' ?>
+<?php include 'db_connect.php'; ?>
 <?php
 if(isset($_GET['id'])){
-	$qry = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM faculty where id=".$_GET['id'])->fetch_array();
+	$qry = $conn->query("SELECT *, concat(lastname,', ', firstname,' ', middlename) as name FROM faculty WHERE id=".$_GET['id'])->fetch_array();
 	foreach($qry as $k =>$v){
 		$$k = $v;
 	}
 }
-
 ?>
+
 <div class="container-fluid">
 	<p>Name: <b><?php echo ucwords($name) ?></b></p>
 	<p>Gender: <b><?php echo ucwords($gender) ?></b></p>
 	<p>Email: </i> <b><?php echo $email ?></b></p>
 	<p>Contact: </i> <b><?php echo $contact ?></b></p>
 	<p>Address: </i> <b><?php echo $address ?></b></p>
+	
+	<!-- Display uploaded image -->
+	<?php if(!empty($image)): ?>
+		<p>Uploaded Image:</p>
+		<img src="<?php echo $image; ?>" style="max-width: 150px; max-height: 150px;">
+	<?php else: ?>
+		<p>No image uploaded.</p>
+	<?php endif; ?>
+	
 	<hr class="divider">
 </div>
+
 <div class="modal-footer display">
 	<div class="row">
 		<div class="col-md-12">
@@ -23,9 +33,10 @@ if(isset($_GET['id'])){
 		</div>
 	</div>
 </div>
+
 <style>
 	p{
-		margin:unset;
+		margin: unset;
 	}
 	#uni_modal .modal-footer{
 		display: none;
@@ -34,6 +45,7 @@ if(isset($_GET['id'])){
 		display: block;
 	}
 </style>
+
 <script>
-	
+	// Add any JavaScript code if needed
 </script>

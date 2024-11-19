@@ -99,27 +99,50 @@ Class Action {
 
 	function save_user(){
 		extract($_POST);
+		
+		// Basic data sanitization
+		$name = $this->db->real_escape_string($name);
+		$username = $this->db->real_escape_string($username);
+		
+		// Build base data string
 		$data = " name = '$name' ";
 		$data .= ", username = '$username' ";
 		if(!empty($password))
-		$data .= ", password = '".md5($password)."' ";
+			$data .= ", password = '".md5($password)."' ";
 		$data .= ", type = '$type' ";
-		if($type == 1)
-			$establishment_id = 0;
-		$data .= ", establishment_id = '$establishment_id' ";
-		$chk = $this->db->query("Select * from users where username = '$username' and id !='$id' ")->num_rows;
-		if($chk > 0){
-			return 2;
-			exit;
+		
+		// Check for existing username
+		if(empty($id)) {
+			$check_query = "SELECT * FROM users WHERE username = '$username'";
+		} else {
+			$check_query = "SELECT * FROM users WHERE username = '$username' AND id != '$id'";
 		}
+		
+		$chk = $this->db->query($check_query);
+		if(!$chk) {
+			// Log error if query fails
+			error_log("Error in username check: " . $this->db->error);
+			return 0;
+		}
+		
+		if($chk->num_rows > 0){
+			return 2; // Username exists
+		}
+		
+		// Perform the insert or update
 		if(empty($id)){
-			$save = $this->db->query("INSERT INTO users set ".$data);
-		}else{
-			$save = $this->db->query("UPDATE users set ".$data." where id = ".$id);
+			$save = $this->db->query("INSERT INTO users SET ".$data);
+		} else {
+			$save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
 		}
+		
 		if($save){
-			return 1;
+			return 1; // Success
 		}
+		
+		// Log error if save fails
+		error_log("Error in save query: " . $this->db->error);
+		return 0; // Failed
 	}
 	function delete_user(){
 		extract($_POST);

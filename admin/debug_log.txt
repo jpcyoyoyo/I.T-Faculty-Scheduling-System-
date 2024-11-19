@@ -1,0 +1,22 @@
+POST Data:
+Array
+(
+    [id] => 
+    [name] => vince
+    [username] => Vince01
+    [password] => 2000
+    [type] => 2
+)
+
+
+Data string:
+ name = 'vince' , username = 'Vince01' , password = '08f90c1a417155361a5c4b8d297e0d78' , type = '2' , establishment_id = '' 
+
+Check Query:
+SELECT * FROM users WHERE username = 'Vince01'
+
+Number of matching rows: 0
+
+Final Query:
+INSERT INTO users SET  name = 'vince' , username = 'Vince01' , password = '08f90c1a417155361a5c4b8d297e0d78' , type = '2' , establishment_id = '' 
+
